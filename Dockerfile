@@ -6,13 +6,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Y_eShopWeb_Client/Y_eShopWeb_Client.csproj", "Y_eShopWeb_Client/"]
-COPY ["Y_eShop_Common/Y_eShop_Common.csproj", "Y_eShop_Common/"]
-COPY ["Y_eShop_Models/Y_eShop_Models.csproj", "Y_eShop_Models/"]
-COPY ["Y_eShop_DataAccess/Y_eShop_DataAccess.csproj", "Y_eShop_DataAccess/"]
-RUN dotnet restore "Y_eShopWeb_Client/Y_eShopWeb_Client.csproj"
+COPY ["Y_eShopWeb_Client.csproj", .]
+RUN dotnet restore "Y_eShopWeb_Client.csproj"
 COPY . .
-WORKDIR "/src/Y_eShopWeb_Client"
+WORKDIR "/src"
 RUN dotnet build "Y_eShopWeb_Client.csproj" -c Release -o /app/build
 
 FROM build AS publish
